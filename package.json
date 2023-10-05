@@ -1,0 +1,65 @@
+{
+  "name": "decode-formdata",
+  "description": "Decodes complex FormData into a JavaScript object",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": "Fabian Hiller",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fabian-hiller/decode-formdata"
+  },
+  "keywords": [
+    "form",
+    "data",
+    "formdata",
+    "decode",
+    "convert",
+    "transform",
+    "multipart"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
+    "lint": "eslint \"src/**/*.ts*\" && tsc --noEmit",
+    "format": "prettier --write ./src",
+    "format.check": "prettier --check ./src",
+    "build": "tsup",
+    "publish": "npm publish"
+  },
+  "devDependencies": {
+    "@types/eslint": "^8.44.3",
+    "@typescript-eslint/eslint-plugin": "^6.7.4",
+    "@typescript-eslint/parser": "^6.7.4",
+    "@vitest/coverage-v8": "^0.34.6",
+    "eslint": "^8.50.0",
+    "eslint-plugin-import": "^2.28.1",
+    "jsdom": "^22.1.0",
+    "prettier": "^3.0.3",
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2",
+    "vite": "^4.4.10",
+    "vitest": "^0.34.6"
+  }
+}
