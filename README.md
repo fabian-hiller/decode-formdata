@@ -24,7 +24,7 @@ import { decode } from 'decode-formdata';
 ### Deno
 
 ```ts
-import { decode } from 'https://deno.land/x/decode-formdata/mod.ts';
+import { decode } from 'https://deno.land/x/decode_formdata/mod.ts';
 ```
 
 ## How it works
