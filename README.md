@@ -95,7 +95,7 @@ async function server(formData: FormData) {
 
 > For deeply nested arrays, use the `$` symbol instead of the index when specifying the path to a specifiy data type: `nested.$.array.$.path`
 
-After decoding, `formValues` now contains the following values:
+After decoding, `formValues` now contains the following data:
 
 ```js
 const formValues = {
