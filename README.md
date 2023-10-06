@@ -100,10 +100,10 @@ After decoding, `formValues` now contains the following data:
 ```js
 const formValues = {
   array: ['Value 1', 'Value 2', 'Value 3'],
-  booleans: { true: true, false: false },
-  dates: { date: Date, time: Date },
-  files: { image: Blob, audio: Blob },
-  numbers: { number: 123, range: 50 },
+  boolean: { true: true, false: false },
+  date: { date: Date, time: Date },
+  file: { image: Blob, audio: Blob },
+  number: { number: 123, range: 50 },
 };
 ```
 
@@ -126,10 +126,10 @@ import {
 
 const FormSchema = object({
   array: array(string()),
-  booleans: object({ true: boolean(), false: boolean() }),
-  dates: object({ date: date(), time: date() }),
-  files: object({ image: blob(), audio: blob() }),
-  numbers: object({ number: number(), range: number() }),
+  boolean: object({ true: boolean(), false: boolean() }),
+  date: object({ date: date(), time: date() }),
+  file: object({ image: blob(), audio: blob() }),
+  number: object({ number: number(), range: number() }),
 });
 
 async function server(formData: FormData) {
