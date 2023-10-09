@@ -2,7 +2,7 @@
 
 When the values of your form are encoded to `FormData`, for example to send them to a server via HTTP, some information is lost. Using this library, you can decode `FormData` into a JavaScript object and supplement the information that was lost during encoding.
 
-This library is especially useful in combination with progressively enhanced forms via actions in fullstack frameworks such as Next.js, Nuxt, Remix, SvelteKit, SolidStart, and Qwik. Furthermore, you can validate and type the decoded data afterwards with a schema library like [Valibot](https://valibot.dev/) or [Zod](https://zod.dev/).
+This library is especially useful in combination with progressively enhanced forms via actions in fullstack frameworks such as [Next.js](https://nextjs.org/), [Nuxt](https://nuxt.com/), [Remix](https://remix.run/), [SvelteKit](https://kit.svelte.dev/), [SolidStart](https://start.solidjs.com/), and [Qwik](https://qwik.builder.io/). Furthermore, you can validate and type the decoded data afterwards with a schema library like [Valibot](https://valibot.dev/) or [Zod](https://zod.dev/).
 
 ## Installation
 
@@ -29,51 +29,54 @@ import { decode } from 'https://deno.land/x/decode_formdata/mod.ts';
 
 ## How it works
 
-`FormData` stores the names of your fields and their values. However, there is a problem. Only strings and files are accepted as values. However, complex forms can contain booleans, strings and dates. This leads to the fact that the boolean value `true` must be mapped with `"true"` and `false` values are simply ignored. Numbers and dates are also converted to strings.
+`FormData` stores the names of your fields and their values. However, there is a problem. Only strings and files are accepted as values, but complex forms can contain booleans, strings and dates. This leads to the fact that the boolean value `true` must be mapped with `"on"` and `false` values are simply ignored. Numbers and dates are also converted to strings.
 
-Another problem are objects and arrays, which are usually mapped using dot notation. For example, the input field `<input name="todos.0.lable" />` should map to the object `{ todos: [{ lable: "" }] }`. By telling `decode` where arrays, booleans, dates, files, and numbers are located, the function can decode your `FormData` back into a complex JavaScript object.
+Another problem are objects and arrays, which are usually mapped using dot notation. For example, the input field `<input name="todos.0.label" />` should map to the object `{ todos: [{ label: "" }] }`. By telling `decode` where arrays, booleans, dates, files, and numbers are located, the function can decode your `FormData` back into a complex JavaScript object.
 
-Consider the following form:
+Consider the following form to add a new product to an online store:
 
 ```html
 <form enctype="multipart/form-data" method="post">
-  <!-- Array -->
-  <input name="array.0" type="text" />
-  <input name="array.1" type="text" />
-  <input name="array.3" type="text" />
+  <!-- Product -->
+  <input name="title" type="text" />
+  <input name="price" type="number" />
 
-  <!-- Booleans -->
-  <input name="boolean.true" type="checkbox" />
-  <input name="boolean.false" type="checkbox" />
+  <!-- Metadata -->
+  <input name="created" type="date" />
+  <input name="active" type="checkbox" />
 
-  <!-- Dates -->
-  <input name="date.date" type="date" />
-  <input name="date.time" type="date" />
+  <!-- Tags -->
+  <input name="tags.0" type="text" />
+  <input name="tags.1" type="text" />
+  <input name="tags.2" type="text" />
 
-  <!-- Files -->
-  <input name="file.image" type="file" />
-  <input name="file.audio" type="file" />
-
-  <!-- Numbers -->
-  <input name="number.number" type="number" />
-  <input name="number.range" type="range" />
+  <!-- Images -->
+  <input name="images.0.title" type="text" />
+  <input name="images.0.created" type="date" />
+  <input name="images.0.file" type="file" />
+  <input name="images.1.title" type="text" />
+  <input name="images.1.created" type="date" />
+  <input name="images.1.file" type="file" />
 </form>
 ```
 
-When it is is filled out and submitted to the server, the `FormData` object may contain the following entries:
+When the form is submitted to the server, the `FormData` may contain the following entries:
 
 ```js
 const formEntries = [
-  ['array.0', 'Value 1'],
-  ['array.1', 'Value 2'],
-  ['array.2', 'Value 3'],
-  ['boolean.true', 'true'],
-  ['date.date', '2023-10-05'],
-  ['date.time', '17:15'],
-  ['file.image', Blob],
-  ['file.audio', Blob],
-  ['number.number', '123'],
-  ['number.range', '50'],
+  ['title', 'Red apple'],
+  ['price', '0.89'],
+  ['created', '2023-10-09'],
+  ['active', 'on'],
+  ['tags.0', 'fruit'],
+  ['tags.1', 'healthy'],
+  ['tags.2', 'sweet'],
+  ['images.0.title', 'Close up of an apple'],
+  ['images.0.created', '2023-08-24'],
+  ['images.0.file', Blob],
+  ['images.1.title', 'Our fruit fields at Lake Constance'],
+  ['images.1.created', '2023-08-12'],
+  ['images.1.file', Blob],
 ];
 ```
 
@@ -84,26 +87,38 @@ import { decode } from 'decode-formdata';
 
 async function server(formData: FormData) {
   const formValues = decode(formData, {
-    arrays: ['array'],
-    booleans: ['boolean.true', 'boolean.false'],
-    dates: ['date.date', 'date.time'],
-    files: ['file.image', 'file.audio'],
-    numbers: ['number.number', 'number.range'],
+    arrays: ['tags', 'images'],
+    booleans: ['active'],
+    dates: ['created', 'images.$.created'],
+    files: ['images.$.file'],
+    numbers: ['price'],
   });
 }
 ```
 
-> For deeply nested arrays, use the `$` symbol instead of the index when specifying the path to a specifiy data type: `nested.$.array.$.path`
+> For deeply nested arrays, use the `$` symbol instead of the index when specifying the path to a specifiy data type.
 
 After decoding, `formValues` now contains the following data:
 
 ```js
 const formValues = {
-  array: ['Value 1', 'Value 2', 'Value 3'],
-  boolean: { true: true, false: false },
-  date: { date: Date, time: Date },
-  file: { image: Blob, audio: Blob },
-  number: { number: 123, range: 50 },
+  title: 'Red apple',
+  price: 0.89,
+  created: Date,
+  active: true,
+  tags: ['fruit', 'healthy', 'sweet'],
+  images: [
+    {
+      title: 'Close up of an apple',
+      created: Date,
+      file: Blob,
+    },
+    {
+      title: 'Our fruit fields at Lake Constance',
+      created: Date,
+      file: Blob,
+    },
+  ],
 };
 ```
 
@@ -113,38 +128,37 @@ Now, to validate and type your form's data, you can use a schema library like [V
 
 ```ts
 import { decode } from 'decode-formdata';
-import {
-  array,
-  boolean,
-  blob,
-  date,
-  object,
-  number,
-  parse,
-  string,
-} from './src/index.ts';
+import * as v from 'valibot';
 
-const FormSchema = object({
-  array: array(string()),
-  boolean: object({ true: boolean(), false: boolean() }),
-  date: object({ date: date(), time: date() }),
-  file: object({ image: blob(), audio: blob() }),
-  number: object({ number: number(), range: number() }),
+// Create product schema
+const ProductSchema = v.object({
+  title: v.string(),
+  price: v.number(),
+  created: v.date(),
+  active: v.boolean(),
+  tags: v.array(v.string()),
+  images: v.array(
+    v.object({
+      title: v.string(),
+      created: v.date(),
+      file: v.blob(),
+    })
+  ),
 });
 
 async function server(formData: FormData) {
   try {
     // Decode form date
     const formValues = decode(formData, {
-      arrays: ['array'],
-      booleans: ['boolean.true', 'boolean.false'],
-      dates: ['date.date', 'date.time'],
-      files: ['file.image', 'file.audio'],
-      numbers: ['number.number', 'number.range'],
+      arrays: ['tags', 'images'],
+      booleans: ['active'],
+      dates: ['created', 'images.$.created'],
+      files: ['images.$.file'],
+      numbers: ['price'],
     });
 
     // Parse form values
-    const parsedValues = parse(FormSchema, formValues);
+    const productData = parse(ProductSchema, formValues);
 
     // Handle errors
   } catch (error) {
