@@ -17,7 +17,7 @@ pnpm add decode-formdata      # pnpm
 bun add decode-formdata       # bun
 ```
 
-```js
+```ts
 import { decode } from 'decode-formdata';
 ```
 
@@ -62,7 +62,7 @@ Consider the following form to add a new product to an online store:
 
 When the form is submitted to the server, the `FormData` may contain the following entries:
 
-```js
+```ts
 const formEntries = [
   ['title', 'Red apple'],
   ['price', '0.89'],
@@ -82,7 +82,7 @@ const formEntries = [
 
 Using `decode` of this library you can easily decode this data back to JavaScript:
 
-```js
+```ts
 import { decode } from 'decode-formdata';
 
 async function server(formData: FormData) {
@@ -100,7 +100,7 @@ async function server(formData: FormData) {
 
 After decoding, `formValues` now contains the following data:
 
-```js
+```ts
 const formValues = {
   title: 'Red apple',
   price: 0.89,
