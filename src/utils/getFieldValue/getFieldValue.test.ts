@@ -5,8 +5,10 @@ describe('getFieldValue', () => {
   test('should decode values', () => {
     // Booleans
     const booleans = ['boolean', 'nested.$.boolean'];
-    expect(getFieldValue({ booleans }, 'boolean', 'true')).toBe(true);
+    expect(getFieldValue({ booleans }, 'boolean', 'on')).toBe(true);
     expect(getFieldValue({ booleans }, 'nested.$.boolean', 'true')).toBe(true);
+    expect(getFieldValue({ booleans }, 'boolean', 'false')).toBe(false);
+    expect(getFieldValue({ booleans }, 'boolean', '0')).toBe(false);
 
     // Dates
     const dates = ['date', 'nested.$.date'];

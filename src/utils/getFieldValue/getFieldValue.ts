@@ -17,7 +17,7 @@ export function getFieldValue(
 ) {
   // Booleans
   if (info?.booleans?.includes(templateName)) {
-    return true;
+    return value !== 'false' && value !== '0';
   }
 
   if (typeof value === 'string') {

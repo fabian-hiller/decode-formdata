@@ -1,7 +1,7 @@
 /**
- * Returns the decoded date of a form field.
+ * Returns the decoded date of a field.
  *
- * @param value The form field value.
+ * @param value The field value.
  *
  * @returns The decoded date.
  */
