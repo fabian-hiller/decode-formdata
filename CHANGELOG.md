@@ -2,7 +2,7 @@
 
 All notable changes to the library will be documented in this file.
 
-## vX.X.X (Month DD, YYYY)
+## v0.2.0 (October 11, 2023)
 
 - Add support for `false` booleans to `getFieldValue` util (issue #1)
 
