@@ -12,6 +12,7 @@ describe('getFieldValue', () => {
 
     // Dates
     const dates = ['date', 'nested.$.date'];
+    expect(getFieldValue({ dates }, 'date', '')).toBeNull();
     expect(getFieldValue({ dates }, 'date', '2023-10-04')).toEqual(
       new Date('2023-10-04T00:00:00.000Z')
     );
@@ -21,8 +22,10 @@ describe('getFieldValue', () => {
 
     // Numbers
     const numbers = ['number', 'nested.$.number', 'date'];
+    expect(getFieldValue({ numbers }, 'number', '')).toBeNaN();
     expect(getFieldValue({ numbers }, 'number', '123')).toBe(123);
     expect(getFieldValue({ numbers }, 'nested.$.number', '123')).toBe(123);
+    expect(getFieldValue({ numbers }, 'date', 'Invalid Date')).toBeNaN();
     expect(getFieldValue({ numbers }, 'date', '2023-10-04')).toBe(
       1696377600000
     );

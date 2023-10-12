@@ -6,6 +6,11 @@
  * @returns The decoded date.
  */
 export function getFieldDate(value: string) {
+  // Empty string
+  if (!value) {
+    return null;
+  }
+
   // Date (yyyy-mm-dd)
   if (/^\d{4}-(0[1-9]|1[0-2])-([12]\d|0[1-9]|3[01])$/.test(value)) {
     return new Date(`${value}T00:00:00.000Z`);

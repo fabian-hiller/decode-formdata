@@ -3,6 +3,9 @@ import { getFieldDate } from './getFieldDate.ts';
 
 describe('getFieldDate', () => {
   test('should decode dates', () => {
+    // Emtpy string
+    expect(getFieldDate('')).toBeNull();
+
     // Date (yyyy-mm-dd)
     expect(getFieldDate('2023-10-04')).toEqual(
       new Date('2023-10-04T00:00:00.000Z')

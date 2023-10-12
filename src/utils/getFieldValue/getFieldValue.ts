@@ -30,7 +30,7 @@ export function getFieldValue(
     if (info?.numbers?.includes(templateName)) {
       return /^-?\d*(\.\d+)?$/.test(value)
         ? parseFloat(value)
-        : getFieldDate(value).getTime();
+        : getFieldDate(value)!.getTime();
     }
   }
 
