@@ -41,7 +41,7 @@ export function decode<
         return (object[key] = isArray ? [] : {});
       }
 
-      // Otherwise, if it is not an emty file, add value
+      // Otherwise, if it is not an empty file, add value
       if (
         !info?.files?.includes(templateName) ||
         (value && (typeof value === 'string' || value.size))
