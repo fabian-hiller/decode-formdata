@@ -45,7 +45,7 @@ export function getFieldDate(value: string) {
 
   // Timestamp ([0-9])
   if (/^\d+$/.test(value)) {
-    return new Date(+value)
+    return new Date(+value);
   }
 
   // Otherwise

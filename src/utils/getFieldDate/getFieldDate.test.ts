@@ -36,6 +36,6 @@ describe('getFieldDate', () => {
 
     expect(getFieldDate('1699597055066')).toEqual(
       new Date('2023-11-10T06:17:35.066Z')
-    )
+    );
   });
 });
