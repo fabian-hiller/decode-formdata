@@ -2,6 +2,10 @@
 
 All notable changes to the library will be documented in this file.
 
+## vX.X.X (Month DD, YYYY)
+
+- Add support for millisecond dates to `getFieldDate` util (pull request #7)
+
 ## v0.3.0 (October 12, 2023)
 
 - Change output of empty string dates to `null` (issue #3)

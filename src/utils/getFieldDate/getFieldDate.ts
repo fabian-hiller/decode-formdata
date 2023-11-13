@@ -43,7 +43,7 @@ export function getFieldDate(value: string) {
     return new Date(`1970-01-01T${value}.000Z`);
   }
 
-  // Timestamp ([0-9])
+  // Milliseconds
   if (/^\d+$/.test(value)) {
     return new Date(+value);
   }
