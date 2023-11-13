@@ -2,7 +2,7 @@
 
 All notable changes to the library will be documented in this file.
 
-## vX.X.X (Month DD, YYYY)
+## v0.4.0 (November 12, 2023)
 
 - Add support for millisecond dates to `getFieldDate` util (pull request #7)
 - Improve performance and security of regular expressions
