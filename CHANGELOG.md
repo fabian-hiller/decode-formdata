@@ -5,6 +5,7 @@ All notable changes to the library will be documented in this file.
 ## vX.X.X (Month DD, YYYY)
 
 - Add `FormDataInfo` type to global exports
+- Add support for non-indexed array fields (issue #8)
 
 ## v0.4.0 (November 12, 2023)
 

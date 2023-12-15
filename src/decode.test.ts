@@ -60,12 +60,26 @@ describe('decode', () => {
     expect(decode(formData, { files: ['file'] })).toEqual({ file });
   });
 
-  test('should decode arrays', () => {
+  test('should decode indexed arrays', () => {
     const formData = new FormData();
     formData.append('array.0', 'index_0');
     formData.append('array.1', 'index_1');
     formData.append('array.2', 'index_2');
     expect(decode(formData, { arrays: ['array'] })).toEqual({
+      array: ['index_0', 'index_1', 'index_2'],
+    });
+  });
+
+  test('should decode non-indexed arrays', () => {
+    const formData = new FormData();
+    formData.append('array', 'index_0');
+    formData.append('array', 'index_1');
+    formData.append('array', 'index_2');
+    expect(
+      decode(formData, {
+        arrays: ['array'],
+      })
+    ).toEqual({
       array: ['index_0', 'index_1', 'index_2'],
     });
   });

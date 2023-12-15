@@ -46,7 +46,21 @@ export function decode<
         !info?.files?.includes(templateName) ||
         (value && (typeof value === 'string' || value.size))
       ) {
-        object[key] = getFieldValue(info, templateName, value);
+        // Get field value
+        const fieldValue = getFieldValue(info, templateName, value);
+
+        // If it is an non-indexed array, add value to array
+        if (info?.arrays?.includes(templateName)) {
+          if (object[key]) {
+            object[key].push(fieldValue);
+          } else {
+            object[key] = [fieldValue];
+          }
+
+          // Otherwise, add value directly to key
+        } else {
+          object[key] = fieldValue;
+        }
       }
     }, values);
   }
