@@ -1,7 +1,7 @@
 {
   "name": "decode-formdata",
   "description": "Decodes complex FormData into a JavaScript object",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "license": "MIT",
   "author": "Fabian Hiller",
   "repository": {
