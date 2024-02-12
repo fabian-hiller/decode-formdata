@@ -2,6 +2,10 @@
 
 All notable changes to the library will be documented in this file.
 
+## vX.X.X (Month DD, YYYY)
+
+- Change output for empty strings, `'null'` and `'undefined'` (issue #9)
+
 ## v0.5.0 (December 14, 2023)
 
 - Add `FormDataInfo` type to global exports

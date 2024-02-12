@@ -15,9 +15,14 @@ import {
  * @returns The decoded date.
  */
 export function getFieldDate(value: string) {
-  // Empty string
-  if (!value) {
+  // Null
+  if (!value || value === 'null') {
     return null;
+  }
+
+  // Undefined
+  if (value === 'undefined') {
+    return undefined;
   }
 
   // Date (yyyy-mm-dd)

@@ -1,5 +1,7 @@
 import { FormDataInfo } from '../../types.ts';
+import { getFieldBoolean } from '../getFieldBoolean/getFieldBoolean.ts';
 import { getFieldDate } from '../getFieldDate/index.ts';
+import { getFieldNumber } from '../getFieldNumber/getFieldNumber.ts';
 
 /**
  * Returns the decoded value of a field.
@@ -17,7 +19,7 @@ export function getFieldValue(
 ) {
   // Booleans
   if (info?.booleans?.includes(templateName)) {
-    return value !== 'false' && value !== '0';
+    return getFieldBoolean(value);
   }
 
   if (typeof value === 'string') {
@@ -28,9 +30,7 @@ export function getFieldValue(
 
     // Numbers
     if (info?.numbers?.includes(templateName)) {
-      return /^-?\d*(\.\d+)?$/.test(value)
-        ? parseFloat(value)
-        : getFieldDate(value)!.getTime();
+      return getFieldNumber(value);
     }
   }
 

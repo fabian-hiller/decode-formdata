@@ -6,6 +6,12 @@ describe('getFieldDate', () => {
     // Emtpy string
     expect(getFieldDate('')).toBeNull();
 
+    // Null string
+    expect(getFieldDate('null')).toBeNull();
+
+    // Undefined string
+    expect(getFieldDate('undefined')).toBeUndefined();
+
     // Date (yyyy-mm-dd)
     expect(getFieldDate('2023-10-04')).toEqual(
       new Date('2023-10-04T00:00:00.000Z')
