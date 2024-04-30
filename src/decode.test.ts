@@ -84,6 +84,18 @@ describe('decode', () => {
     });
   });
 
+  test('should decode numbers in array', () => {
+    const formData = new FormData();
+    formData.append('array.0', '111');
+    formData.append('array.1', '222');
+    formData.append('array.2', '333');
+    expect(
+      decode(formData, { arrays: ['array'], numbers: ['array.$'] })
+    ).toEqual({
+      array: [111, 222, 333],
+    });
+  });
+
   test('should decode objects', () => {
     const formData = new FormData();
     formData.append('nested.string', 'hello');
