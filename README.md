@@ -158,7 +158,7 @@ async function server(formData: FormData) {
     });
 
     // Parse form values
-    const productData = parse(ProductSchema, formValues);
+    const productData = v.parse(ProductSchema, formValues);
 
     // Handle errors
   } catch (error) {
