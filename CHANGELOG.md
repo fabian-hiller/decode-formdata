@@ -2,7 +2,7 @@
 
 All notable changes to the library will be documented in this file.
 
-## vX.X.X (Month DD, YYYY)
+## v0.7.1 (April 30, 2024)
 
 - Fix bug in template of path when decoding direct array items
 
