@@ -1,4 +1,4 @@
-import { FormDataInfo } from './types.ts';
+import { FormDataInfo, FormDataTransform } from './types.ts';
 import { getFieldValue, getPathObject, getValuePaths } from './utils/index.ts';
 
 /**
@@ -7,17 +7,47 @@ import { getFieldValue, getPathObject, getValuePaths } from './utils/index.ts';
  *
  * @param formData The form data object.
  * @param info The form data info.
+ * @param transform The value transformation.
  *
  * @returns The decoded form values.
  */
 export function decode<
   TOutput extends Record<string, any> = Record<string, unknown>,
->(formData: FormData, info?: FormDataInfo): TOutput {
+>(
+  formData: FormData,
+  info: FormDataInfo,
+  transform?: FormDataTransform
+): TOutput;
+
+/**
+ * Decodes the form data entries. Information that is lost during the transfer
+ * via HTTP can be supplemented.
+ *
+ * @param formData The form data object.
+ * @param transform The value transformation.
+ *
+ * @returns The decoded form values.
+ */
+export function decode<
+  TOutput extends Record<string, any> = Record<string, unknown>,
+>(formData: FormData, transform?: FormDataTransform): TOutput;
+
+export function decode<
+  TOutput extends Record<string, any> = Record<string, unknown>,
+>(
+  formData: FormData,
+  arg2?: FormDataInfo | FormDataTransform,
+  arg3?: FormDataTransform
+): TOutput {
+  // Get info and transform argument
+  const [info, transform] =
+    typeof arg2 === 'function' ? [undefined, arg2] : [arg2, arg3];
+
   // Create empty values object
   const values: any = {};
 
   // Add each form entry to values
-  for (const [path, value] of formData.entries()) {
+  for (const [path, input] of formData.entries()) {
     // Create template name and keys
     const templateName = path.replace(/.\d+./g, '.$.');
     const templateKeys = templateName.split('.');
@@ -44,22 +74,27 @@ export function decode<
       // Otherwise, if it is not an empty file, add value
       if (
         !info?.files?.includes(templateName) ||
-        (value && (typeof value === 'string' || value.size))
+        (input && (typeof input === 'string' || input.size))
       ) {
         // Get field value
-        const fieldValue = getFieldValue(info, templateName, value);
+        let output = getFieldValue(info, templateName, input);
+
+        // Transform value if necessary
+        if (transform) {
+          output = transform({ path, input, output });
+        }
 
         // If it is an non-indexed array, add value to array
         if (info?.arrays?.includes(templateName)) {
           if (object[key]) {
-            object[key].push(fieldValue);
+            object[key].push(output);
           } else {
-            object[key] = [fieldValue];
+            object[key] = [output];
           }
 
           // Otherwise, add value directly to key
         } else {
-          object[key] = fieldValue;
+          object[key] = output;
         }
       }
     }, values);

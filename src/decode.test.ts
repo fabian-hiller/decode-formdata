@@ -106,4 +106,12 @@ describe('decode', () => {
       empty: { array: [] },
     });
   });
+
+  test('should transform value', () => {
+    const formData = new FormData();
+    formData.append('string', 'hello');
+    expect(decode(formData, ({ input }) => input + '123')).toEqual({
+      string: 'hello123',
+    });
+  });
 });

@@ -2,6 +2,10 @@
 
 All notable changes to the library will be documented in this file.
 
+## vX.X.X (Month DD, YYYY)
+
+- Add optional `transform` argument to `decode` function
+
 ## v0.6.0 (February 11, 2024)
 
 - Change output for empty strings, `'null'` and `'undefined'` (issue #9)
