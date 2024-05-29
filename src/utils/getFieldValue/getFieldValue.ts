@@ -16,7 +16,7 @@ export function getFieldValue(
   info: FormDataInfo | undefined,
   templateName: string,
   value: FormDataEntryValue
-) {
+): boolean | Date | number | FormDataEntryValue | null | undefined {
   // Booleans
   if (info?.booleans?.includes(templateName)) {
     return getFieldBoolean(value);

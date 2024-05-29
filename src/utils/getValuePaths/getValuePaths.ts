@@ -8,7 +8,7 @@ import { getPathObject } from '../getPathObject/index.ts';
  *
  * @returns Every value path.
  */
-export function getValuePaths(templateName: string, values: any) {
+export function getValuePaths(templateName: string, values: any): string[] {
   // Create list of paths
   const paths: string[] = [];
 

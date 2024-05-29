@@ -1,0 +1,5 @@
+{
+  "name": "@decode-formdata/decode-formdata",
+  "version": "0.7.3",
+  "exports": "./src/index.ts"
+}
