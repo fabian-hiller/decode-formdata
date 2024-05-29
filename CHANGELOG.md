@@ -2,6 +2,10 @@
 
 All notable changes to the library will be documented in this file.
 
+## vX.X.X (Month DD, YYYY)
+
+- Fix bug in regex of `decode` for template name creation (issue #208)
+
 ## v0.7.2 (April 30, 2024)
 
 - Republish previous version because build step was forgotten

@@ -49,7 +49,9 @@ export function decode<
   // Add each form entry to values
   for (const [path, input] of formData.entries()) {
     // Create template name and keys
-    const templateName = path.replace(/.\d+./g, '.$.').replace(/.\d+$/, '.$');
+    const templateName = path
+      .replace(/\.\d+\./g, '.$.')
+      .replace(/\.\d+$/, '.$');
     const templateKeys = templateName.split('.');
 
     // Add value of current field to values
@@ -77,6 +79,7 @@ export function decode<
         (input && (typeof input === 'string' || input.size))
       ) {
         // Get field value
+        console.log('templateName', templateName);
         let output = getFieldValue(info, templateName, input);
 
         // Transform value if necessary

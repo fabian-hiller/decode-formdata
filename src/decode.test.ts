@@ -20,12 +20,16 @@ describe('decode', () => {
   test('should decode numbers', () => {
     const formData = new FormData();
     formData.append('integer', '123');
+    formData.append('integer_2', '123');
     formData.append('float', '0.123');
     formData.append('signed', '-123');
     expect(
-      decode(formData, { numbers: ['integer', 'float', 'signed'] })
+      decode(formData, {
+        numbers: ['integer', 'integer_2', 'float', 'signed'],
+      })
     ).toEqual({
       integer: 123,
+      integer_2: 123,
       float: 0.123,
       signed: -123,
     });
