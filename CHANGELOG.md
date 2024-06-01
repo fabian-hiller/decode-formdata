@@ -2,7 +2,7 @@
 
 All notable changes to the library will be documented in this file.
 
-## vX.X.X (Month DD, YYYY)
+## v0.7.4 (June 01, 2024)
 
 - Remove unnecessary log statement in `decode` function
 
