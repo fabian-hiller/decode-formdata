@@ -2,6 +2,10 @@
 
 All notable changes to the library will be documented in this file.
 
+## v0.7.5 (June 01, 2024)
+
+- Republish previous version because build step was forgotten
+
 ## v0.7.4 (June 01, 2024)
 
 - Remove unnecessary log statement in `decode` function
