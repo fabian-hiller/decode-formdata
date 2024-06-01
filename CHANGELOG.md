@@ -2,6 +2,10 @@
 
 All notable changes to the library will be documented in this file.
 
+## vX.X.X (Month DD, YYYY)
+
+- Remove unnecessary log statement in `decode` function
+
 ## v0.7.3 (May 29, 2024)
 
 - Fix bug in regex of `decode` for template name creation (issue #208)

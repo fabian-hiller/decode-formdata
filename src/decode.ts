@@ -79,7 +79,6 @@ export function decode<
         (input && (typeof input === 'string' || input.size))
       ) {
         // Get field value
-        console.log('templateName', templateName);
         let output = getFieldValue(info, templateName, input);
 
         // Transform value if necessary
