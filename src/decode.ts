@@ -51,55 +51,60 @@ export function decode<
     // Create template name and keys
     const templateName = path
       .replace(/\.\d+\./g, '.$.')
-      .replace(/\.\d+$/, '.$');
+      .replace(/\.\d+$/, '.$')
+      .replace(/\[\d+\]/g, '.$&')
+      .replace(/\[(\d+)\]/g, '$');
     const templateKeys = templateName.split('.');
 
     // Add value of current field to values
-    path.split('.').reduce((object, key, index, keys) => {
-      // If it is not last index, return array or object
-      if (index < keys.length - 1) {
-        // If array or object already exists, return it
-        if (object[key]) {
-          return object[key];
-        }
-
-        // Otherwise, check if value is an array
-        const isArray =
-          index < keys.length - 2
-            ? templateKeys[index + 1] === '$'
-            : info?.arrays?.includes(templateKeys.slice(0, -1).join('.'));
-
-        // Add and return empty array or object
-        return (object[key] = isArray ? [] : {});
-      }
-
-      // Otherwise, if it is not an empty file, add value
-      if (
-        !info?.files?.includes(templateName) ||
-        (input && (typeof input === 'string' || input.size))
-      ) {
-        // Get field value
-        let output = getFieldValue(info, templateName, input);
-
-        // Transform value if necessary
-        if (transform) {
-          output = transform({ path, input, output });
-        }
-
-        // If it is an non-indexed array, add value to array
-        if (info?.arrays?.includes(templateName)) {
+    path
+      .replace(/\[(\d+)\]/g, '.$1')
+      .split('.')
+      .reduce((object, key, index, keys) => {
+        // If it is not last index, return array or object
+        if (index < keys.length - 1) {
+          // If array or object already exists, return it
           if (object[key]) {
-            object[key].push(output);
-          } else {
-            object[key] = [output];
+            return object[key];
           }
 
-          // Otherwise, add value directly to key
-        } else {
-          object[key] = output;
+          // Otherwise, check if value is an array
+          const isArray =
+            index < keys.length - 2
+              ? templateKeys[index + 1] === '$'
+              : info?.arrays?.includes(templateKeys.slice(0, -1).join('.'));
+
+          // Add and return empty array or object
+          return (object[key] = isArray ? [] : {});
         }
-      }
-    }, values);
+
+        // Otherwise, if it is not an empty file, add value
+        if (
+          !info?.files?.includes(templateName) ||
+          (input && (typeof input === 'string' || input.size))
+        ) {
+          // Get field value
+          let output = getFieldValue(info, templateName, input);
+
+          // Transform value if necessary
+          if (transform) {
+            output = transform({ path, input, output });
+          }
+
+          // If it is an non-indexed array, add value to array
+          if (info?.arrays?.includes(templateName)) {
+            if (object[key]) {
+              object[key].push(output);
+            } else {
+              object[key] = [output];
+            }
+
+            // Otherwise, add value directly to key
+          } else {
+            object[key] = output;
+          }
+        }
+      }, values);
   }
 
   // Supplement empty arrays if necessary

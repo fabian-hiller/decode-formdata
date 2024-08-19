@@ -46,17 +46,17 @@ Consider the following form to add a new product to an online store:
   <input name="active" type="checkbox" />
 
   <!-- Tags -->
-  <input name="tags.0" type="text" />
-  <input name="tags.1" type="text" />
-  <input name="tags.2" type="text" />
+  <input name="tags[0]" type="text" />
+  <input name="tags[1]" type="text" />
+  <input name="tags[2]" type="text" />
 
   <!-- Images -->
-  <input name="images.0.title" type="text" />
-  <input name="images.0.created" type="date" />
-  <input name="images.0.file" type="file" />
-  <input name="images.1.title" type="text" />
-  <input name="images.1.created" type="date" />
-  <input name="images.1.file" type="file" />
+  <input name="images[0].title" type="text" />
+  <input name="images[0].created" type="date" />
+  <input name="images[0].file" type="file" />
+  <input name="images[1].title" type="text" />
+  <input name="images[1].created" type="date" />
+  <input name="images[1].file" type="file" />
 </form>
 ```
 
@@ -68,15 +68,15 @@ const formEntries = [
   ['price', '0.89'],
   ['created', '2023-10-09'],
   ['active', 'on'],
-  ['tags.0', 'fruit'],
-  ['tags.1', 'healthy'],
-  ['tags.2', 'sweet'],
-  ['images.0.title', 'Close up of an apple'],
-  ['images.0.created', '2023-08-24'],
-  ['images.0.file', Blob],
-  ['images.1.title', 'Our fruit fields at Lake Constance'],
-  ['images.1.created', '2023-08-12'],
-  ['images.1.file', Blob],
+  ['tags[0]', 'fruit'],
+  ['tags[1]', 'healthy'],
+  ['tags[2]', 'sweet'],
+  ['images[0].title', 'Close up of an apple'],
+  ['images[0].created', '2023-08-24'],
+  ['images[0].file', Blob],
+  ['images[1].title', 'Our fruit fields at Lake Constance'],
+  ['images[1].created', '2023-08-12'],
+  ['images[1].file', Blob],
 ];
 ```
 
@@ -174,3 +174,7 @@ Find a bug or have an idea how to improve the library? Please fill out an [issue
 ## License
 
 This project is available free of charge and licensed under the [MIT license](https://github.com/fabian-hiller/decode-formdata/blob/main/LICENSE.md).
+
+## Note
+
+Both dot and bracket notation are supported for arrays.
