@@ -43,19 +43,39 @@ export function decode<
   const [info, transform] =
     typeof arg2 === 'function' ? [undefined, arg2] : [arg2, arg3];
 
+  // Normalize info arrays to dot notation
+  if (info) {
+    for (const key of [
+      'arrays',
+      'booleans',
+      'dates',
+      'files',
+      'numbers',
+    ] as const) {
+      if (info[key]?.length) {
+        info[key] = info[key]!.map((templateName) =>
+          templateName.replace(/\[\$\]/g, '.$')
+        );
+      }
+    }
+  }
+
   // Create empty values object
   const values: any = {};
 
   // Add each form entry to values
   for (const [path, input] of formData.entries()) {
+    // Normalize path to dot notation
+    const normlizedPath = path.replace(/\[(\d+)\]/g, '.$1');
+
     // Create template name and keys
-    const templateName = path
+    const templateName = normlizedPath
       .replace(/\.\d+\./g, '.$.')
       .replace(/\.\d+$/, '.$');
     const templateKeys = templateName.split('.');
 
     // Add value of current field to values
-    path.split('.').reduce((object, key, index, keys) => {
+    normlizedPath.split('.').reduce((object, key, index, keys) => {
       // If it is not last index, return array or object
       if (index < keys.length - 1) {
         // If array or object already exists, return it

@@ -31,7 +31,9 @@ import { decode } from 'https://deno.land/x/decode_formdata/mod.ts';
 
 `FormData` stores the names of your fields and their values. However, there is a problem. Only strings and files are accepted as values, but complex forms can contain booleans, strings and dates. This leads to the fact that the boolean value `true` must be mapped with `"on"` and `false` values are simply ignored. Numbers and dates are also converted to strings.
 
-Another problem are objects and arrays, which are usually mapped using dot notation. For example, the input field `<input name="todos.0.label" />` should map to the object `{ todos: [{ label: "" }] }`. By telling `decode` where arrays, booleans, dates, files, and numbers are located, the function can decode your `FormData` back into a complex JavaScript object.
+Another problem are objects and arrays, which are usually mapped using dot and bracket notation. For example, the input field `<input name="todos.0.label" />` should map to the object `{ todos: [{ label: "" }] }`. By telling `decode` where arrays, booleans, dates, files, and numbers are located, the function can decode your `FormData` back into a complex JavaScript object.
+
+> Both dot and bracket notation are supported for arrays.
 
 Consider the following form to add a new product to an online store:
 
@@ -174,3 +176,7 @@ Find a bug or have an idea how to improve the library? Please fill out an [issue
 ## License
 
 This project is available free of charge and licensed under the [MIT license](https://github.com/fabian-hiller/decode-formdata/blob/main/LICENSE.md).
+
+## Note
+
+Both dot and bracket notation are supported for arrays.
