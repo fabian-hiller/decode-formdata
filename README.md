@@ -31,7 +31,9 @@ import { decode } from 'https://deno.land/x/decode_formdata/mod.ts';
 
 `FormData` stores the names of your fields and their values. However, there is a problem. Only strings and files are accepted as values, but complex forms can contain booleans, strings and dates. This leads to the fact that the boolean value `true` must be mapped with `"on"` and `false` values are simply ignored. Numbers and dates are also converted to strings.
 
-Another problem are objects and arrays, which are usually mapped using dot notation. For example, the input field `<input name="todos.0.label" />` should map to the object `{ todos: [{ label: "" }] }`. By telling `decode` where arrays, booleans, dates, files, and numbers are located, the function can decode your `FormData` back into a complex JavaScript object.
+Another problem are objects and arrays, which are usually mapped using dot and bracket notation. For example, the input field `<input name="todos.0.label" />` should map to the object `{ todos: [{ label: "" }] }`. By telling `decode` where arrays, booleans, dates, files, and numbers are located, the function can decode your `FormData` back into a complex JavaScript object.
+
+> Both dot and bracket notation are supported for arrays.
 
 Consider the following form to add a new product to an online store:
 
@@ -46,17 +48,17 @@ Consider the following form to add a new product to an online store:
   <input name="active" type="checkbox" />
 
   <!-- Tags -->
-  <input name="tags[0]" type="text" />
-  <input name="tags[1]" type="text" />
-  <input name="tags[2]" type="text" />
+  <input name="tags.0" type="text" />
+  <input name="tags.1" type="text" />
+  <input name="tags.2" type="text" />
 
   <!-- Images -->
-  <input name="images[0].title" type="text" />
-  <input name="images[0].created" type="date" />
-  <input name="images[0].file" type="file" />
-  <input name="images[1].title" type="text" />
-  <input name="images[1].created" type="date" />
-  <input name="images[1].file" type="file" />
+  <input name="images.0.title" type="text" />
+  <input name="images.0.created" type="date" />
+  <input name="images.0.file" type="file" />
+  <input name="images.1.title" type="text" />
+  <input name="images.1.created" type="date" />
+  <input name="images.1.file" type="file" />
 </form>
 ```
 
@@ -68,15 +70,15 @@ const formEntries = [
   ['price', '0.89'],
   ['created', '2023-10-09'],
   ['active', 'on'],
-  ['tags[0]', 'fruit'],
-  ['tags[1]', 'healthy'],
-  ['tags[2]', 'sweet'],
-  ['images[0].title', 'Close up of an apple'],
-  ['images[0].created', '2023-08-24'],
-  ['images[0].file', Blob],
-  ['images[1].title', 'Our fruit fields at Lake Constance'],
-  ['images[1].created', '2023-08-12'],
-  ['images[1].file', Blob],
+  ['tags.0', 'fruit'],
+  ['tags.1', 'healthy'],
+  ['tags.2', 'sweet'],
+  ['images.0.title', 'Close up of an apple'],
+  ['images.0.created', '2023-08-24'],
+  ['images.0.file', Blob],
+  ['images.1.title', 'Our fruit fields at Lake Constance'],
+  ['images.1.created', '2023-08-12'],
+  ['images.1.file', Blob],
 ];
 ```
 

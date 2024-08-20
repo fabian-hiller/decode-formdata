@@ -64,7 +64,7 @@ describe('decode', () => {
     expect(decode(formData, { files: ['file'] })).toEqual({ file });
   });
 
-  test('should decode indexed arrays', () => {
+  test('should decode indexed arrays with dot notation', () => {
     const formData = new FormData();
     formData.append('array.0', 'index_0');
     formData.append('array.1', 'index_1');
@@ -98,7 +98,7 @@ describe('decode', () => {
     });
   });
 
-  test('should decode numbers in array', () => {
+  test('should decode numbers in array with dot notation', () => {
     const formData = new FormData();
     formData.append('array.0', '111');
     formData.append('array.1', '222');
@@ -116,7 +116,7 @@ describe('decode', () => {
     formData.append('array[1]', '222');
     formData.append('array[2]', '333');
     expect(
-      decode(formData, { arrays: ['array'], numbers: ['array.$'] })
+      decode(formData, { arrays: ['array'], numbers: ['array[$]'] })
     ).toEqual({
       array: [111, 222, 333],
     });
@@ -130,7 +130,7 @@ describe('decode', () => {
     });
   });
 
-  test('should decode nested arrays', () => {
+  test('should decode nested arrays with dot notation', () => {
     const formData = new FormData();
     formData.append('nested.0.array.0', 'index_0');
     formData.append('nested.0.array.1', 'index_1');
@@ -152,7 +152,7 @@ describe('decode', () => {
     formData.append('nested[0].array[2]', 'index_2');
     expect(
       decode(formData, {
-        arrays: ['nested.$.array', 'empty.array'],
+        arrays: ['nested[$].array', 'empty.array'],
       })
     ).toEqual({
       nested: [{ array: ['index_0', 'index_1', 'index_2'] }],
