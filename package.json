@@ -45,8 +45,7 @@
     "lint": "eslint \"src/**/*.ts*\" && tsc --noEmit",
     "format": "prettier --write ./src",
     "format.check": "prettier --check ./src",
-    "build": "tsup",
-    "publish": "npm publish"
+    "build": "tsup"
   },
   "devDependencies": {
     "@types/eslint": "^8.44.3",
