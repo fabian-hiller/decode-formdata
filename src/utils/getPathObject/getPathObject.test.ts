@@ -4,7 +4,7 @@ import { getPathObject } from './getPathObject.ts';
 describe('getPathObject', () => {
   test('should return values argument', () => {
     const values = {};
-    expect(getPathObject([], [], values)).toEqual(values);
+    expect(getPathObject([], [], values)).toStrictEqual(values);
   });
 
   test('should return value of path', () => {
@@ -21,7 +21,7 @@ describe('getPathObject', () => {
     };
     const pathKeys = ['deeply', 'nested', '0', 'object'];
     const templateKeys = ['deeply', 'nested', '$', 'object'];
-    expect(getPathObject(pathKeys, templateKeys, values)).toEqual({
+    expect(getPathObject(pathKeys, templateKeys, values)).toStrictEqual({
       key: 'value',
     });
   });
@@ -30,8 +30,8 @@ describe('getPathObject', () => {
     const values = {};
     const pathKeys = ['deeply', 'nested', '0', 'object'];
     const templateKeys = ['deeply', 'nested', '$', 'object'];
-    expect(getPathObject(pathKeys, templateKeys, values)).toEqual({});
-    expect(values).toEqual({
+    expect(getPathObject(pathKeys, templateKeys, values)).toStrictEqual({});
+    expect(values).toStrictEqual({
       deeply: {
         nested: [
           {

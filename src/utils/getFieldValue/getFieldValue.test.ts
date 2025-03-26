@@ -20,12 +20,12 @@ describe('getFieldValue', () => {
     expect(getFieldValue({ dates }, 'date', '')).toBeNull();
     expect(getFieldValue({ dates }, 'date', 'null')).toBeNull();
     expect(getFieldValue({ dates }, 'date', 'undefined')).toBeUndefined();
-    expect(getFieldValue({ dates }, 'date', '2023-10-04')).toEqual(
+    expect(getFieldValue({ dates }, 'date', '2023-10-04')).toStrictEqual(
       new Date('2023-10-04T00:00:00.000Z')
     );
-    expect(getFieldValue({ dates }, 'nested.$.date', '2023-10-04')).toEqual(
-      new Date('2023-10-04T00:00:00.000Z')
-    );
+    expect(
+      getFieldValue({ dates }, 'nested.$.date', '2023-10-04')
+    ).toStrictEqual(new Date('2023-10-04T00:00:00.000Z'));
 
     // Numbers
     const numbers = ['number', 'nested.$.number', 'date'];

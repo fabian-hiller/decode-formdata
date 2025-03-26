@@ -5,13 +5,13 @@ describe('decode', () => {
   test('should decode strings', () => {
     const formData = new FormData();
     formData.append('string', 'hello');
-    expect(decode(formData)).toEqual({ string: 'hello' });
+    expect(decode(formData)).toStrictEqual({ string: 'hello' });
   });
 
   test('should decode boolens', () => {
     const formData = new FormData();
     formData.append('true', 'true');
-    expect(decode(formData, { booleans: ['true', 'false'] })).toEqual({
+    expect(decode(formData, { booleans: ['true', 'false'] })).toStrictEqual({
       true: true,
       false: false,
     });
@@ -27,7 +27,7 @@ describe('decode', () => {
       decode(formData, {
         numbers: ['integer', 'integer_2', 'float', 'signed'],
       })
-    ).toEqual({
+    ).toStrictEqual({
       integer: 123,
       integer_2: 123,
       float: 0.123,
@@ -47,7 +47,7 @@ describe('decode', () => {
       decode(formData, {
         dates: ['date', 'datetime', 'week', 'time', 'timeseconds', 'iso'],
       })
-    ).toEqual({
+    ).toStrictEqual({
       date: new Date('2023-10-04T00:00:00.000Z'),
       datetime: new Date('2023-10-04T02:52:00.000Z'),
       week: new Date('2023-10-01T00:00:00.000Z'),
@@ -61,7 +61,7 @@ describe('decode', () => {
     const formData = new FormData();
     const file = new File(['hello'], 'hello.txt');
     formData.append('file', file);
-    expect(decode(formData, { files: ['file'] })).toEqual({ file });
+    expect(decode(formData, { files: ['file'] })).toStrictEqual({ file });
   });
 
   test('should decode indexed arrays with dot notation', () => {
@@ -69,7 +69,7 @@ describe('decode', () => {
     formData.append('array.0', 'index_0');
     formData.append('array.1', 'index_1');
     formData.append('array.2', 'index_2');
-    expect(decode(formData, { arrays: ['array'] })).toEqual({
+    expect(decode(formData, { arrays: ['array'] })).toStrictEqual({
       array: ['index_0', 'index_1', 'index_2'],
     });
   });
@@ -79,7 +79,7 @@ describe('decode', () => {
     formData.append('array[0]', 'index_0');
     formData.append('array[1]', 'index_1');
     formData.append('array[2]', 'index_2');
-    expect(decode(formData, { arrays: ['array'] })).toEqual({
+    expect(decode(formData, { arrays: ['array'] })).toStrictEqual({
       array: ['index_0', 'index_1', 'index_2'],
     });
   });
@@ -93,7 +93,7 @@ describe('decode', () => {
       decode(formData, {
         arrays: ['array'],
       })
-    ).toEqual({
+    ).toStrictEqual({
       array: ['index_0', 'index_1', 'index_2'],
     });
   });
@@ -105,7 +105,7 @@ describe('decode', () => {
     formData.append('array.2', '333');
     expect(
       decode(formData, { arrays: ['array'], numbers: ['array.$'] })
-    ).toEqual({
+    ).toStrictEqual({
       array: [111, 222, 333],
     });
   });
@@ -117,7 +117,7 @@ describe('decode', () => {
     formData.append('array[2]', '333');
     expect(
       decode(formData, { arrays: ['array'], numbers: ['array[$]'] })
-    ).toEqual({
+    ).toStrictEqual({
       array: [111, 222, 333],
     });
   });
@@ -125,7 +125,7 @@ describe('decode', () => {
   test('should decode objects', () => {
     const formData = new FormData();
     formData.append('nested.string', 'hello');
-    expect(decode(formData)).toEqual({
+    expect(decode(formData)).toStrictEqual({
       nested: { string: 'hello' },
     });
   });
@@ -139,7 +139,7 @@ describe('decode', () => {
       decode(formData, {
         arrays: ['nested.$.array', 'empty.array'],
       })
-    ).toEqual({
+    ).toStrictEqual({
       nested: [{ array: ['index_0', 'index_1', 'index_2'] }],
       empty: { array: [] },
     });
@@ -154,7 +154,7 @@ describe('decode', () => {
       decode(formData, {
         arrays: ['nested[$].array', 'empty.array'],
       })
-    ).toEqual({
+    ).toStrictEqual({
       nested: [{ array: ['index_0', 'index_1', 'index_2'] }],
       empty: { array: [] },
     });
@@ -165,13 +165,13 @@ describe('decode', () => {
     formData.append('__proto__.polluted', 'foo');
     formData.append('constructor.polluted', 'bar');
     formData.append('prototype.polluted', 'baz');
-    expect(decode(formData)).toEqual({});
+    expect(decode(formData)).toStrictEqual({});
   });
 
   test('should transform value', () => {
     const formData = new FormData();
     formData.append('string', 'hello');
-    expect(decode(formData, ({ input }) => input + '123')).toEqual({
+    expect(decode(formData, ({ input }) => input + '123')).toStrictEqual({
       string: 'hello123',
     });
   });

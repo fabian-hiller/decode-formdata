@@ -3,7 +3,7 @@ import { getValuePaths } from './getValuePaths.ts';
 
 describe('getValuePaths', () => {
   test('should value paths', () => {
-    expect(getValuePaths('value', {})).toEqual(['value']);
+    expect(getValuePaths('value', {})).toStrictEqual(['value']);
     expect(
       getValuePaths('deeply.$.nested.$.value', {
         deeply: [
@@ -29,7 +29,7 @@ describe('getValuePaths', () => {
           },
         ],
       })
-    ).toEqual([
+    ).toStrictEqual([
       'deeply.0.nested.0.value',
       'deeply.0.nested.1.value',
       'deeply.1.nested.0.value',
