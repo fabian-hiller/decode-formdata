@@ -1,34 +1,27 @@
-name: Setup pnpm with cache
+name: Setup
+description: Sets up Node.js, Deno and pnpm
 
 runs:
-  using: 'composite'
+  using: composite
   steps:
-    - name: Install Node.js
-      uses: actions/setup-node@v3
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v4
       with:
-        node-version: 18
-
-    - name: Install pnpm
-      uses: pnpm/action-setup@v2
-      id: pnpm-install
-      with:
-        version: 8
+        version: 9
         run_install: false
 
-    - name: Get store directory
-      id: pnpm-cache
-      shell: bash
-      run: |
-        echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-    - name: Setup pnpm cache
-      uses: actions/cache@v3
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
       with:
-        path: ${{ env.STORE_PATH }}
-        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-        restore-keys: |
-          ${{ runner.os }}-pnpm-store-
+        node-version: 20
+        registry-url: 'https://registry.npmjs.org'
+        cache: pnpm
 
-    - name: Install packages
+    - name: Setup Deno
+      uses: denoland/setup-deno@v2
+      with:
+        deno-version: v2.x
+
+    - name: Install dependencies
       shell: bash
       run: pnpm install
