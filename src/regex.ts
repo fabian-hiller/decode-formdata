@@ -29,7 +29,8 @@ export const ISO_TIME_REGEX: RegExp = /^(?:0\d|1\d|2[0-3]):[0-5]\d$/u;
 /**
  * [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time with seconds regex.
  */
-export const ISO_TIME_SECOND_REGEX: RegExp = /^(?:0\d|1\d|2[0-3])(?::[0-5]\d){2}$/u;
+export const ISO_TIME_SECOND_REGEX: RegExp =
+  /^(?:0\d|1\d|2[0-3])(?::[0-5]\d){2}$/u;
 
 /**
  * [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp regex.

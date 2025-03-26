@@ -1,4 +1,4 @@
-import type{ FormDataInfo, FormDataTransform } from './types.ts';
+import type { FormDataInfo, FormDataTransform } from './types.ts';
 import { getFieldValue, getPathObject, getValuePaths } from './utils/index.ts';
 
 /**
