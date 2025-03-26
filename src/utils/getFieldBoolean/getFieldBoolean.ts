@@ -5,7 +5,7 @@
  *
  * @returns The decoded boolean.
  */
-export function getFieldBoolean(value: FormDataEntryValue) {
+export function getFieldBoolean(value: FormDataEntryValue): boolean | null | undefined {
   // Null
   if (!value || value === 'null') {
     return null;

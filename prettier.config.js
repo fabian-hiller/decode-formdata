@@ -1,4 +1,8 @@
-module.exports = {
+
+export default  {
+  plugins: [
+    '@trivago/prettier-plugin-sort-imports',
+  ],
   printWidth: 80,
   tabWidth: 2,
   useTabs: false,
@@ -11,4 +15,9 @@ module.exports = {
   bracketSameLine: false,
   arrowParens: 'always',
   endOfLine: 'lf',
+  // prettier-ignore
+  // eslint-disable-next-line no-useless-escape
+  importOrder: ['^\w', '^[./]'],
+  importOrderSortSpecifiers: true,
+  importOrderCaseInsensitive: true,
 };

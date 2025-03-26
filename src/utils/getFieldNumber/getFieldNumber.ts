@@ -8,7 +8,7 @@ import { getFieldDate } from '../getFieldDate/index.ts';
  *
  * @returns The decoded number.
  */
-export function getFieldNumber(value: string) {
+export function getFieldNumber(value: string): number | null | undefined {
   // Null
   if (!value || value === 'null') {
     return null;

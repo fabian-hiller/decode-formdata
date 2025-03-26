@@ -1,12 +1,16 @@
 {
   "compilerOptions": {
-    "strict": true,
+    "allowImportingTsExtensions": true,
+    "declaration": true,
+    "exactOptionalPropertyTypes": true,
+    "isolatedDeclarations": true,
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
-    "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "node",
-    "allowImportingTsExtensions": true,
-    "noEmit": true
+    "noEmit": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ES2020",
   },
-  "include": ["."]
+  "include": ["src"]
 }

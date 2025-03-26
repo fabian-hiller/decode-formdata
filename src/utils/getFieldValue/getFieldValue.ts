@@ -1,4 +1,4 @@
-import { FormDataInfo } from '../../types.ts';
+import type { FormDataInfo } from '../../types.ts';
 import { getFieldBoolean } from '../getFieldBoolean/getFieldBoolean.ts';
 import { getFieldDate } from '../getFieldDate/index.ts';
 import { getFieldNumber } from '../getFieldNumber/getFieldNumber.ts';
@@ -6,9 +6,9 @@ import { getFieldNumber } from '../getFieldNumber/getFieldNumber.ts';
 /**
  * Returns the decoded value of a field.
  *
+ * @param info The form data info.
  * @param templateName The template name.
  * @param value The field value.
- * @param info The form data info.
  *
  * @returns The decoded value.
  */
