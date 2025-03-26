@@ -72,29 +72,40 @@ export function decode<
     const templateName = normlizedPath
       .replace(/\.\d+\./g, '.$.')
       .replace(/\.\d+$/, '.$');
+
+    // Split normalized path and template name
+    const keys = normlizedPath.split('.');
     const templateKeys = templateName.split('.');
 
     // Add value of current field to values
-    normlizedPath.split('.').reduce((object, key, index, keys) => {
+    let current = values;
+    for (let index = 0; index < keys.length; index++) {
+      const key = keys[index];
+
+      // Prevent prototype pollution by ignoring certain keys
+      if (key === '__proto__' || key === 'prototype' || key === 'constructor') {
+        break;
+      }
+
       // If it is not last index, return array or object
       if (index < keys.length - 1) {
         // If array or object already exists, return it
-        if (object[key]) {
-          return object[key];
+        if (current[key]) {
+          current = current[key];
+
+          // Otherwise, check if value is an array
+        } else {
+          const isArray =
+            index < keys.length - 2
+              ? templateKeys[index + 1] === '$'
+              : info?.arrays?.includes(templateKeys.slice(0, -1).join('.'));
+
+          // Add and return empty array or object
+          current = current[key] = isArray ? [] : {};
         }
 
-        // Otherwise, check if value is an array
-        const isArray =
-          index < keys.length - 2
-            ? templateKeys[index + 1] === '$'
-            : info?.arrays?.includes(templateKeys.slice(0, -1).join('.'));
-
-        // Add and return empty array or object
-        return (object[key] = isArray ? [] : {});
-      }
-
-      // Otherwise, if it is not an empty file, add value
-      if (
+        // Otherwise, if it is not an empty file, add value
+      } else if (
         !info?.files?.includes(templateName) ||
         (input && (typeof input === 'string' || input.size))
       ) {
@@ -108,18 +119,18 @@ export function decode<
 
         // If it is an non-indexed array, add value to array
         if (info?.arrays?.includes(templateName)) {
-          if (object[key]) {
-            object[key].push(output);
+          if (current[key]) {
+            current[key].push(output);
           } else {
-            object[key] = [output];
+            current[key] = [output];
           }
 
           // Otherwise, add value directly to key
         } else {
-          object[key] = output;
+          current[key] = output;
         }
       }
-    }, values);
+    }
   }
 
   // Supplement empty arrays if necessary

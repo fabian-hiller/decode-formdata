@@ -160,6 +160,14 @@ describe('decode', () => {
     });
   });
 
+  test('should prevent prototype pollution', () => {
+    const formData = new FormData();
+    formData.append('__proto__.polluted', 'foo');
+    formData.append('constructor.polluted', 'bar');
+    formData.append('prototype.polluted', 'baz');
+    expect(decode(formData)).toEqual({});
+  });
+
   test('should transform value', () => {
     const formData = new FormData();
     formData.append('string', 'hello');

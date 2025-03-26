@@ -2,6 +2,10 @@
 
 All notable changes to the library will be documented in this file.
 
+## vX.X.X (Month DD, YYYY)
+
+- Fix potential prototype pollution by ignoring certain keys
+
 ## v0.8.0 (August 20, 2024)
 
 - Add support for array bracket notation (pull request #15)
