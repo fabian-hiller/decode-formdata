@@ -2,7 +2,7 @@
 
 All notable changes to the library will be documented in this file.
 
-## vX.X.X (Month DD, YYYY)
+## v0.9.0 (March 26, 2025)
 
 - Change `FormDataEntry` and `FormDataInfo` from type to interface
 - Fix potential prototype pollution by ignoring certain keys
